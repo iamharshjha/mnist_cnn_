@@ -1,0 +1,29 @@
+
+# Vivado generated files
+*.jou
+*.log
+*.str
+*.cache/
+*.hw/
+*.sim/
+*.runs/
+*.srcs/
+*.ip_user_files/
+.Xil/
+usage_statistics_webtalk.*
+xsim.dir/
+
+# Temporary files
+*.tmp
+*.wdb
+
+# Other
+*.bit
+*.dcp
+*.checkpoint/
+*.xpr
+.idea
+.venv
+
+
+
