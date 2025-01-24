@@ -79,7 +79,7 @@ def main():
 
     for i in range(n):
 
-        testModel = x_test[i].reshape([1, 28, 28, -1])
+        testModel = x_train[0].reshape([1, 28, 28, -1])
         testmodel, ans = testData()
 
         ans = actualAnswer(layer0_weights, layer2_weights, layer5_weights , testModel)

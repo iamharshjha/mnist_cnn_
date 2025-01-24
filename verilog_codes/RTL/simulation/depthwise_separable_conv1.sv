@@ -110,10 +110,10 @@ module depthwise_separable_conv1 (
     assign conv_out_3 = (depthwise_result_1 * pointwise_kernels[2]   )  + biases[2];
     
     // Set the valid output signal
-//    always @(posedge valid_out_buf) begin
-//        valid_out_calc <= 1;
-//        $display("depthwise_result_1 = %0d", depthwise_result_1);
-//    end
+   always @(posedge valid_out_buf) begin
+        valid_out_calc <= 1;
+        $display("depthwise_result_1 = %0d", depthwise_result_1);
+    end
 
 endmodule
 

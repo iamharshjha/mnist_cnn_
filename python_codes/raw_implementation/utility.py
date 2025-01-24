@@ -47,7 +47,7 @@ def MAXPOOLING(input_img: list, shape: tuple, poolSize: tuple):
                         if (x + px) < width and (y + py) < height:
                             max_val = max(max_val, input_img[y + py][x + px][ch])
                 output[y // pysize][x // pxsize][ch] = max_val
-    print("shape after the pooling layer:", np.array(output).shape)
+    # print("shape after the pooling layer:", np.array(output).shape)
     return output.tolist()
 
 def flatten(inputImage: list) -> list:
@@ -118,12 +118,12 @@ def DEPTHWISE_SEP(inputImage: list, inputShape: tuple, layer:list , kernelShape:
     kxSize = kernelShape[0]
     kySize = kernelShape[1]
     channelOut = pointwise_shape[3]  # Output channels after pointwise convolution
-    print("Depthwise Kernel Shape:", np.array(depthwise_kernel).shape)
-    print("Pointwise Kernel Shape:", np.array(pointwise_kernel).shape)
-    print(depthwise_kernel)
-    print("##########")
-    print(pointwise_kernel)
-    print(bias)
+    # print("Depthwise Kernel Shape:", np.array(depthwise_kernel).shape)
+    # print("Pointwise Kernel Shape:", np.array(pointwise_kernel).shape)
+    # print(depthwise_kernel)
+    # print("##########")
+    # print(pointwise_kernel)
+    # print(bias)
     # Step 1: Depthwise Convolution (each input channel has its own kernel)
     depthwise_output = np.zeros((width - kxSize + 1, height - kySize + 1, channelIn))  # output of depthwise conv
 
@@ -167,5 +167,5 @@ def DEPTHWISE_SEP(inputImage: list, inputShape: tuple, layer:list , kernelShape:
     #print("output before adding the bias " , pointwise_output)
     pointwise_output += bias
     #print("output after adding the bias " , pointwise_output)
-    print("shape after the convolution layer " , np.array(pointwise_output).shape)
+    # print("shape after the convolution layer " , np.array(pointwise_output).shape)
     return pointwise_output.tolist()
