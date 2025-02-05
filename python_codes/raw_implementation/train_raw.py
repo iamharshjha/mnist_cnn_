@@ -67,7 +67,7 @@ def actualAnswer(layer0_conv2d_weights, layer2_conv2d_weights,layer5_dense_weigh
 def main():
 
     model = loadModel()
-    n = 1
+    n = 1000
     cnt = 0
     #layer0_weights , layer2_weights , layer5_weights , layer6_weights = loadLayers()
     layer0_weights, layer2_weights, layer5_weights = loadLayers()
@@ -78,8 +78,8 @@ def main():
     x_test = np.expand_dims(x_test, -1)
 
     for i in range(n):
-
-        testModel = x_train[0].reshape([1, 28, 28, -1])
+        #m = 5
+        testModel = x_train[i].reshape([1, 28, 28, -1])
         testmodel, ans = testData()
 
         ans = actualAnswer(layer0_weights, layer2_weights, layer5_weights , testModel)
