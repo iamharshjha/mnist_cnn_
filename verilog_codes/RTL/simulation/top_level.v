@@ -119,12 +119,12 @@ maxpool_relu_22(
   .max_value_3(max2_value_9),
   .valid_out_relu(valid_out_6)
 );
-
+//assign valid_out_7 = valid_out_6  & valid_out_5 & valid_out_4;
 fully_connected #(.INPUT_NUM(144), .OUTPUT_NUM(10), .DATA_BITS(8))
 fully_connected(
   .clk(clk),
   .rst_n(rst_n),
-  .valid_in(valid_out_6),
+  .valid_in(valid_out_6  & valid_out_5 & valid_out_4),
   .data_in_1(max2_value_1),
   .data_in_2(max2_value_2),
   .data_in_3(max2_value_3),
@@ -151,7 +151,7 @@ always #5 clk = ~clk;
 
 // Read image text file
 initial begin
-  $readmemh("/media/harsh/c98020b5-0d6a-4055-87fd-8c8b7a337914/MTP_PROJECT/verilog_codes/output_image.mem", pixels);
+  $readmemh("/media/harsh/c98020b5-0d6a-4055-87fd-8c8b7a337914/MTP_PROJECT/verilog_codes/1.mem", pixels);
   clk <= 1'b0;
   rst_n <= 1'b1;
   #3

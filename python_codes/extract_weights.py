@@ -23,7 +23,7 @@ def _saveListAsJson(listToSave: list, name: str):
         fp.close()
 
 def main():
-    model = keras.models.load_model('fine_tuned_model.h5', compile=True)
+    model = keras.models.load_model('trained_model.h5', compile=True)
     model.summary()
 
     layer0_conv2d = model.layers[0]
@@ -38,12 +38,12 @@ def main():
 
 
     layer0_conv2d_weights_list = _kerasToList(layer0_conv2d_weights)
-    _saveListAsJson(layer0_conv2d_weights_list, './weights/scaled_8bit_signed1/layer0_conv2d.json')
+    _saveListAsJson(layer0_conv2d_weights_list, './weights/layer0_conv2d.json')
     layer2_conv2d_weights_list = _kerasToList(layer2_conv2d_weights)
-    _saveListAsJson(layer2_conv2d_weights_list, './weights/scaled_8bit_signed1/layer2_conv2d.json')
+    _saveListAsJson(layer2_conv2d_weights_list, './weights/layer2_conv2d.json')
 
     layer5_dense_weights_list = _kerasToListdense(layer5_dense_weights)
-    _saveListAsJson(layer5_dense_weights_list, "./weights/scaled_8bit_signed1/layer5_dense.json")
+    _saveListAsJson(layer5_dense_weights_list, "./weights/layer5_dense.json")
 
 if __name__ == "__main__":
     main()

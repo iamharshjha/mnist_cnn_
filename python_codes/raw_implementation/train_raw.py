@@ -4,9 +4,9 @@ from utility import *
 from tensorflow import keras
 
 def loadLayers():
-    layer0_conv2d_weights = loadWeightsFromJson('../weights/scaled_8bit_signed1/layer0_conv2d.json')
-    layer2_conv2d_weights = loadWeightsFromJson('../weights/scaled_8bit_signed1/layer2_conv2d.json')
-    layer5_dense_weights = loadWeightsFromJson('../weights/scaled_8bit_signed1/layer5_dense.json')
+    layer0_conv2d_weights = loadWeightsFromJson('../weights/layer0_conv2d.json')
+    layer2_conv2d_weights = loadWeightsFromJson('../weights/layer2_conv2d.json')
+    layer5_dense_weights = loadWeightsFromJson('../weights/layer5_dense.json')
     return layer0_conv2d_weights, layer2_conv2d_weights, layer5_dense_weights
 
     return layer0_conv2d_weights, layer2_conv2d_weights, layer5_dense_weights
@@ -29,8 +29,8 @@ def testData():
     x_train = np.expand_dims(x_train, -1)
     x_test = np.expand_dims(x_test, -1)
 
-    testModel = x_test[6].reshape([1, 28, 28, -1])
-    return testModel ,y_test[6]
+    testModel = x_test.reshape([1, 28, 28, -1])
+    return testModel ,y_test
 
 
 def expectedAnswer(model, testModel):
@@ -57,7 +57,7 @@ def actualAnswer(layer0_conv2d_weights, layer2_conv2d_weights,layer5_dense_weigh
 
     output = SOFTMAX(layer5dense)
     max_index = output.index(max(output))
-    print("the model predicted output is: " , max_index)
+    #print("the model predicted output is: " , max_index)
 
     return max_index
 
@@ -67,7 +67,7 @@ def actualAnswer(layer0_conv2d_weights, layer2_conv2d_weights,layer5_dense_weigh
 def main():
 
     model = loadModel()
-    n = 1000
+    n = 10000
     cnt = 0
     #layer0_weights , layer2_weights , layer5_weights , layer6_weights = loadLayers()
     layer0_weights, layer2_weights, layer5_weights = loadLayers()
@@ -79,14 +79,14 @@ def main():
 
     for i in range(n):
         #m = 5
-        testModel = x_train[i].reshape([1, 28, 28, -1])
-        testmodel, ans = testData()
+        testModel = x_test[i].reshape([1, 28, 28, -1])
+        #testmodel, ans = testData()
 
         ans = actualAnswer(layer0_weights, layer2_weights, layer5_weights , testModel)
-        print("actual answer:" ,y_test[i])
+        #print("actual answer:" ,y_test[i])
         if (y_test[i] == ans):
             cnt+=1
-
+        print(f"Processing i = {i}")
     print("accuracy ->" , (cnt/n)*100)
 
 

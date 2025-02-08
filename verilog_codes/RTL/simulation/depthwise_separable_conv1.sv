@@ -66,21 +66,7 @@ module depthwise_separable_conv1 (
         
 
         
-//         $display("Depthwise Kernel:");
-//           for (int k = 0; k < 5; k++) begin
-//               for (int j = 0; j < 5; j++) begin
-//                   $display("depthwise_kernel[%0d][%0d] = %0d", k, j, depthwise_kernel[k][j]);
-//               end
-//           end
-       
-//           $display("Pointwise Kernels:");
-//           $display("pointwise_kernels[0] = %0d", pointwise_kernels[0]);
-//           $display("pointwise_kernels[1] = %0d", pointwise_kernels[1]);
-//           $display("pointwise_kernels[2] = %0d", pointwise_kernels[2]);
-//           $display("Biases:");
-//           $display("biases[0] = %0d", biases[0]);
-//           $display("biases[1] = %0d", biases[1]);
-//           $display("biases[2] = %0d", biases[2]);
+
         
     end
 

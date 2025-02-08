@@ -41,7 +41,7 @@ def quantize_weights(layer_weights):
 
 
 # Step 3: Fine-Tune the Model
-def fine_tune_model(model_path, quantized_weights, x_train, y_train, epochs=5, batch_size=32):
+def fine_tune_model(model_path, quantized_weights, x_train, y_train, epochs=5, batch_size=16):
     # Load the model
     model = load_model(model_path)
 
