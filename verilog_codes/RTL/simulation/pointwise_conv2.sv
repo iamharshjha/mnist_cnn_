@@ -23,7 +23,7 @@
 module pointwise_conv2(
     input clk, 
     input rst_n, 
-    input signed [12:0] dep_out_1, dep_out_2, dep_out_3, 
+    input signed [13:0] dep_out_1, dep_out_2, dep_out_3, 
     input valid_calc_out, 
     output reg signed [15:0] conv1_out, conv2_out, conv3_out,
                              conv4_out, conv5_out, conv6_out,

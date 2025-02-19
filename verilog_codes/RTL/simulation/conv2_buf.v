@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
- module conv2_buf #(parameter WIDTH = 12, HEIGHT = 12, DATA_BITS = 12) (
+ module conv2_buf #(parameter WIDTH = 12, HEIGHT = 12, DATA_BITS = 14) (
    input clk,
    input rst_n,
    input valid_in,

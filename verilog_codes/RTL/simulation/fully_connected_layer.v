@@ -27,9 +27,9 @@ module fully_connected #(
     input clk,
     input rst_n,
     input valid_in,
-    input signed [11:0] data_in_1, data_in_2, data_in_3, data_in_4, 
+    input signed [15:0] data_in_1, data_in_2, data_in_3, data_in_4, 
                         data_in_5, data_in_6, data_in_7, data_in_8, data_in_9,
-    output reg [11:0] data_out,
+    output reg [19:0] data_out,
     output reg valid_out_fc
 );
 
@@ -130,7 +130,7 @@ module fully_connected #(
     if (!rst_n)
       data_out <= 12'd0;
     else
-      data_out <= calc_out[18:7];
+      data_out <= calc_out;
   end
 
 endmodule

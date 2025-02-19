@@ -78,7 +78,7 @@ conv2_layer conv2_layer(
   .conv_valid_out(valid_out_3)
 );
 
-maxpool_relu #(.CONV_BIT(12), .HALF_WIDTH(4), .HALF_HEIGHT(4), .HALF_WIDTH_BIT(3))
+maxpool_relu #(.CONV_BIT(12), .HALF_WIDTH(12), .HALF_HEIGHT(12), .HALF_WIDTH_BIT(4))
 maxpool_relu_20(
   .clk(clk),
   .rst_n(rst_n),
@@ -92,7 +92,7 @@ maxpool_relu_20(
   .valid_out_relu(valid_out_4)
 );
 
-maxpool_relu #(.CONV_BIT(12), .HALF_WIDTH(4), .HALF_HEIGHT(4), .HALF_WIDTH_BIT(3))
+maxpool_relu #(.CONV_BIT(12), .HALF_WIDTH(12), .HALF_HEIGHT(12), .HALF_WIDTH_BIT(4))
 maxpool_relu_21(
   .clk(clk),
   .rst_n(rst_n),
@@ -106,7 +106,7 @@ maxpool_relu_21(
   .valid_out_relu(valid_out_5)
 );
 
-maxpool_relu #(.CONV_BIT(12), .HALF_WIDTH(4), .HALF_HEIGHT(4), .HALF_WIDTH_BIT(3))
+maxpool_relu #(.CONV_BIT(12), .HALF_WIDTH(12), .HALF_HEIGHT(12), .HALF_WIDTH_BIT(4))
 maxpool_relu_22(
   .clk(clk),
   .rst_n(rst_n),

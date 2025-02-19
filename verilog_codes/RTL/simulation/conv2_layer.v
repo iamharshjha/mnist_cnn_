@@ -25,14 +25,14 @@ module conv2_layer (
     input rst_n,
     input valid_in,
     input signed [11:0] data_in_0, data_in_1, data_in_2,  // 3 channels, 12-bit input data
-    output signed [13:0] conv1_out, conv2_out, conv3_out,conv4_out , conv5_out , conv6_out , conv7_out , conv8_out , conv9_out,   // 9 outputs from pointwise convolution
+    output signed [15:0] conv1_out, conv2_out, conv3_out,conv4_out , conv5_out , conv6_out , conv7_out , conv8_out , conv9_out,   // 9 outputs from pointwise convolution
     output conv_valid_out    // Valid signal for output
 );
 
     // Buffer signals for the 3 input channels
-    wire signed [11:0] buffer_0_out [0:24]; // 25 data points for channel 0
-    wire signed [11:0] buffer_1_out [0:24]; // 25 data points for channel 1
-    wire signed [11:0] buffer_2_out [0:24]; // 25 data points for channel 2
+    wire signed [13:0] buffer_0_out [0:24]; // 25 data points for channel 0
+    wire signed [13:0] buffer_1_out [0:24]; // 25 data points for channel 1
+    wire signed [13:0] buffer_2_out [0:24]; // 25 data points for channel 2
     wire valid_out_buf_0, valid_out_buf_1, valid_out_buf_2;
 
     // Instantiate buffer modules for each channel

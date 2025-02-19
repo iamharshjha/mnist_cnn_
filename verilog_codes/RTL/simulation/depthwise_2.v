@@ -24,7 +24,7 @@ module depthwise_2(
 input clk , 
 input rst_n , 
 input valid_out_buf , 
-input signed [11:0] data_out1_0, data_out1_1, data_out1_2, data_out1_3, data_out1_4,
+input signed [13:0] data_out1_0, data_out1_1, data_out1_2, data_out1_3, data_out1_4,
 	  data_out1_5, data_out1_6, data_out1_7, data_out1_8, data_out1_9,
 	  data_out1_10, data_out1_11, data_out1_12, data_out1_13, data_out1_14,
 	  data_out1_15, data_out1_16, data_out1_17, data_out1_18, data_out1_19,
