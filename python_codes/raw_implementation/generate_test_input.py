@@ -24,7 +24,7 @@ def mnist_to_mem(image_array, output_path):
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
 # Select the first image for this example
-image = x_train[2]
-
+image = x_train[101]
+print(y_train[101])
 # Convert and save
-mnist_to_mem(image, "1.mem")
+mnist_to_mem(image, "7.mem")

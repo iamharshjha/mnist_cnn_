@@ -151,7 +151,7 @@ always #5 clk = ~clk;
 
 // Read image text file
 initial begin
-  $readmemh("/media/harsh/c98020b5-0d6a-4055-87fd-8c8b7a337914/MTP_PROJECT/verilog_codes/1.mem", pixels);
+  $readmemh("7.mem", pixels);
   clk <= 1'b0;
   rst_n <= 1'b1;
   #3

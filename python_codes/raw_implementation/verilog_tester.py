@@ -1,120 +1,109 @@
 import numpy as np
 import json
-#from utility import *
+from utility import *
+from tensorflow import keras
 
-def DEPTHWISE_SEP(inputImage: list, inputShape: tuple, layer:list , kernelShape: tuple, pointwise_shape: tuple) -> list:
-    width = inputShape[0]
-    height = inputShape[1]
-    channelIn = inputShape[2]
-    depthwise_kernel = layer[0]
-    pointwise_kernel = layer[1]
-    bias = layer[2]
-    kxSize = kernelShape[0]
-    kySize = kernelShape[1]
-    channelOut = pointwise_shape[3]  # Output channels after pointwise convolution
-    print("Depthwise Kernel Shape:", np.array(depthwise_kernel).shape)
-    print("Pointwise Kernel Shape:", np.array(pointwise_kernel).shape)
-    print(depthwise_kernel)
-    print("##########")
-    print(pointwise_kernel)
-    print(bias)
-    # Step 1: Depthwise Convolution (each input channel has its own kernel)
-    depthwise_output = np.zeros((width - kxSize + 1, height - kySize + 1, channelIn))  # output of depthwise conv
-
-    for y in range(height - kySize + 1):
-        for x in range(width - kxSize + 1):
-            for chIn in range(channelIn):
-                for ky in range(kySize):
-                    for kx in range(kxSize):
-                        if ((y + ky) >= height) or ((x + kx) >= width):
-                            continue
-                        # Kernel value at [kx, ky, chIn, chOut]
-                        kr = depthwise_kernel[kx][ky][chIn][0]
-
-                        # Input pixel at [x + kx, y + ky, chIn]
-                        #print("kernel " , kr)
-                        px = inputImage[x + kx][y + ky][chIn]
-                        #print("input image region " , px)
-                        # Add to the depthwise output for chIn
-                        # print(f"kr: {kr}, type: {type(kr)}")
-                        # print(f"px: {px}, type: {type(px)}")
-
-                        depthwise_output[x][y][chIn] += kr * px
-                        #print("output:" , depthwise_output[x][y][chIn])
-    # Step 2: Pointwise Convolution (1x1 convolution on depthwise output)
-    pointwise_output = np.zeros((width - kxSize + 1, height - kySize + 1, channelOut))  # output of pointwise conv
-    # print("output after depthwise conv:")
-    # # print(depthwise_output)
-    # print("Pointwise Kernel Shape:", np.array(pointwise_kernel).shape)
-
-    for y in range(depthwise_output.shape[0]):
-        for x in range(depthwise_output.shape[1]):
-            for chOut in range(channelOut):
-                for chIn in range(channelIn):
-                    # Apply 1x1 pointwise convolution (mix all input channels)
-
-                    kr = pointwise_kernel[0][0][chIn][chOut]
-                    px = depthwise_output[x][y][chIn]
-                    print("chin . chout and kr")
-
-                    print(chIn , chOut , kr)
-                    print("###")
-                    print(px)
-                    pointwise_output[x][y][chOut] += kr * px
-    # pointwise_output += bias
-    #print("output before adding the bias " , pointwise_output)
-    pointwise_output += bias
-    #print("output after adding the bias " , pointwise_output)
-    print("shape after the convolution layer " , np.array(pointwise_output).shape)
-    return pointwise_output.tolist()
-def loadWeightsFromJson(path: str) -> list:
-    with open(path, 'r') as fp:
-        data = json.load(fp)
-        fp.close()
-    return data
 def loadLayers():
     layer0_conv2d_weights = loadWeightsFromJson('../weights/scaled_8bit_signed/layer0_conv2d.json')
     layer2_conv2d_weights = loadWeightsFromJson('../weights/scaled_8bit_signed/layer2_conv2d.json')
     layer5_dense_weights = loadWeightsFromJson('../weights/scaled_8bit_signed/layer5_dense.json')
     return layer0_conv2d_weights, layer2_conv2d_weights, layer5_dense_weights
 
-    return layer0_conv2d_weights, layer2_conv2d_weights, layer5_dense_weights
-def layer1():
+# def loadLayers():
+#     layer0_conv2d_weights = loadWeightsFromJson('../weights/layer0_conv2d.json')
+#     layer2_conv2d_weights = loadWeightsFromJson('../weights/layer2_conv2d.json')
+#     layer5_dense_weights = loadWeightsFromJson('../weights/layer5_dense.json')
+#     return layer0_conv2d_weights, layer2_conv2d_weights, layer5_dense_weights
+
+    #return layer0_conv2d_weights, layer2_conv2d_weights, layer5_dense_weights
+def loadWeightsFromJson(path: str) -> list:
+    with open(path, 'r') as fp:
+        data = json.load(fp)
+        fp.close()
+    return data
 
 
-    # Define the input values as provided
-    data_out = np.array([
-        1, 1, 1, 0, 0,  # First row
-        0, 0, 0, 0, 0,  # Second row
-        0, 0, 0, 0, 0,  # Third row
-        0, 0, 0, 0, 0,  # Fourth row
-        0, 0, 0, 0, 0  # Fifth row
-    ])
+def loadModel():
+    model = keras.models.load_model('../trained_model.h5', compile=True)
+    return model
 
-    # Reshape the 1D array into a 5x5 matrix
-    data_matrix = data_out.reshape((5, 5))
-    data_matrix_expanded = np.expand_dims(data_matrix, -1)
-    testModel = data_matrix_expanded.reshape([1, 5, 5, -1])
-    # Print the 5x5 matrix
-    print("5x5 Matrix:")
-    print(data_matrix)
-    layer0_weights, layer2_weights, layer5_weights = loadLayers()
-    ans = DEPTHWISE_SEP(testModel[0] , (5 ,5,1), layer2_weights ,  (5,5,3,3) , (1,1,3,9))
+def testData():
+
+    (x_train, y_train), (x_test, y_test) = keras.datasets.mnist.load_data()
+    # x_train = x_train.astype("float32") / 255 - 0.5
+    # x_test = x_test.astype("float32") / 255 - 0.5
+    x_train = np.expand_dims(x_train, -1)
+    x_test = np.expand_dims(x_test, -1)
+
+    testModel = x_test.reshape([1, 28, 28, -1])
+    return testModel ,y_test
+
+
+def expectedAnswer(model, testModel):
+    expected = model.predict(testModel)
+    print(f"expected: {expected}")
+
+
+def actualAnswer(layer0_conv2d_weights, layer2_conv2d_weights,layer5_dense_weights , testModel):
+
+    layer0Out = DEPTHWISE_SEP(testModel[0], (28, 28, 1), layer0_conv2d_weights ,  (5,5,1,1) , (1,1,1,3))
+    print("output of after first layer of convolution: \n")
+    print(layer0Out)
+    layer0ReLU = RELU(layer0Out, (24, 24, 3))
+    print("output of the relu layer \n")
+    print(layer0ReLU)
+    layer1Out = MAXPOOLING(layer0ReLU, (24, 24, 3), (2, 2))
+    print("output after the maxpooling layer : ")
+    print(layer1Out)
+    layer2Out = DEPTHWISE_SEP(layer1Out, (12, 12, 3), layer2_conv2d_weights , (5,5,3,3) , (1,1,3,9))
+    print("output after second convolution layer \n")
+    print(layer2Out)
+    layer2ReLU = RELU(layer2Out, (8, 8, 9))
+
+    layer3Out = MAXPOOLING(layer2ReLU, (8, 8, 9), (2, 2))
+    print("output after the maxpooling layer -> ")
+    print(layer3Out)
+    layer4Flatten = flatten(layer3Out)
+    layer5dense = DENSE(layer4Flatten , layer5_dense_weights , (144,10))
+    print("output of the denser layer")
+    print(layer5dense)
+    output = SOFTMAX(layer5dense)
+
+    max_index = output.index(max(output))
+    #print("the model predicted output is: " , max_index)
+
+    return max_index
+
+
 
 
 def main():
-    layer1()
-    # layer0_weights, layer2_weights, layer5_weights = loadLayers()
-    # dep = layer2_weights[0]
-    # pw = layer2_weights[1]
-    # bias =layer2_weights[2]
-    # print(dep)
-    # print("########################################")
-    # print(pw)
-    # print("########################################")
-    # print(bias)
-    # print("******************************************")
-    # print(pw[0][0][1][0])
+
+    model = loadModel()
+    n = 1
+    cnt = 0
+    #layer0_weights , layer2_weights , layer5_weights , layer6_weights = loadLayers()
+    layer0_weights, layer2_weights, layer5_weights = loadLayers()
+    (x_train, y_train), (x_test, y_test) = keras.datasets.mnist.load_data()
+    x_train = x_train/1
+    x_test = x_test/1
+    x_train = np.expand_dims(x_train, -1)
+    x_test = np.expand_dims(x_test, -1)
+
+    for i in range(n):
+        #m = 5
+        testModel = x_train[101].reshape([1, 28, 28, -1])
+        #testmodel, ans = testData()
+
+        ans = actualAnswer(layer0_weights, layer2_weights, layer5_weights , testModel)
+        print("actual answer:" ,y_train[101])
+        print("predicted answer , " ,ans)
+        if (y_train[101] == ans):
+            cnt+=1
+        #print(f"Processing i = {i}")
+    print("accuracy ->" , (cnt/n)*100)
+
+
 
 if __name__ == "__main__":
     main()

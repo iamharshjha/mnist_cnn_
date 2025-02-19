@@ -3,6 +3,12 @@ import json
 from utility import *
 from tensorflow import keras
 
+# def loadLayers():
+#     layer0_conv2d_weights = loadWeightsFromJson('../weights/scaled_8bit_signed/layer0_conv2d.json')
+#     layer2_conv2d_weights = loadWeightsFromJson('../weights/scaled_8bit_signed/layer2_conv2d.json')
+#     layer5_dense_weights = loadWeightsFromJson('../weights/scaled_8bit_signed/layer5_dense.json')
+#     return layer0_conv2d_weights, layer2_conv2d_weights, layer5_dense_weights
+
 def loadLayers():
     layer0_conv2d_weights = loadWeightsFromJson('../weights/layer0_conv2d.json')
     layer2_conv2d_weights = loadWeightsFromJson('../weights/layer2_conv2d.json')
@@ -67,7 +73,7 @@ def actualAnswer(layer0_conv2d_weights, layer2_conv2d_weights,layer5_dense_weigh
 def main():
 
     model = loadModel()
-    n = 10000
+    n = 1
     cnt = 0
     #layer0_weights , layer2_weights , layer5_weights , layer6_weights = loadLayers()
     layer0_weights, layer2_weights, layer5_weights = loadLayers()
@@ -79,14 +85,15 @@ def main():
 
     for i in range(n):
         #m = 5
-        testModel = x_test[i].reshape([1, 28, 28, -1])
+        testModel = x_train[101].reshape([1, 28, 28, -1])
         #testmodel, ans = testData()
 
         ans = actualAnswer(layer0_weights, layer2_weights, layer5_weights , testModel)
-        #print("actual answer:" ,y_test[i])
-        if (y_test[i] == ans):
+        print("actual answer:" ,y_train[101])
+        print("predicted answer , " ,ans)
+        if (y_train[101] == ans):
             cnt+=1
-        print(f"Processing i = {i}")
+        #print(f"Processing i = {i}")
     print("accuracy ->" , (cnt/n)*100)
 
 
