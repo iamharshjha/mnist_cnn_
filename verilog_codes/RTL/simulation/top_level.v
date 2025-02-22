@@ -26,11 +26,11 @@ reg [7:0] pixels [0:783];
 reg [9:0] img_idx;
 reg [7:0] data_in;
 
-wire signed [11:0] conv_out_1, conv_out_2, conv_out_3;
-wire signed [13:0] conv2_out_1, conv2_out_2, conv2_out_3 , conv2_out_4 , conv2_out_5 , conv2_out_6 , conv2_out_7 , conv2_out_8 , conv2_out_9 ;
-wire signed [11:0] max_value_1, max_value_2, max_value_3;
-wire signed [11:0] max2_value_1, max2_value_2, max2_value_3, max2_value_4 , max2_value_5 , max2_value_6 , max2_value_7 , max2_value_8 , max2_value_9 ;
-wire signed [11:0] fc_out_data;
+wire signed [14:0] conv_out_1, conv_out_2, conv_out_3;
+wire signed [14:0] conv2_out_1, conv2_out_2, conv2_out_3 , conv2_out_4 , conv2_out_5 , conv2_out_6 , conv2_out_7 , conv2_out_8 , conv2_out_9 ;
+wire signed [14:0] max_value_1, max_value_2, max_value_3;
+wire signed [14:0] max2_value_1, max2_value_2, max2_value_3, max2_value_4 , max2_value_5 , max2_value_6 , max2_value_7 , max2_value_8 , max2_value_9 ;
+wire signed [17:0] fc_out_data;
 wire [3:0] decision;
 wire valid_out_1, valid_out_2, valid_out_3, valid_out_4, valid_out_5, valid_out_6,valid_out_7 , valid_out_8;
 
@@ -44,7 +44,7 @@ conv1_layer conv1_layer(
   .valid_out_conv(valid_out_1)
 );
 
-maxpool_relu #(.CONV_BIT(12), .HALF_WIDTH(12), .HALF_HEIGHT(12), .HALF_WIDTH_BIT(4))
+maxpool_relu #(.CONV_BIT(15), .HALF_WIDTH(12), .HALF_HEIGHT(12), .HALF_WIDTH_BIT(4))
 maxpool_relu_1(
   .clk(clk),
   .rst_n(rst_n),
@@ -78,7 +78,7 @@ conv2_layer conv2_layer(
   .conv_valid_out(valid_out_3)
 );
 
-maxpool_relu #(.CONV_BIT(12), .HALF_WIDTH(12), .HALF_HEIGHT(12), .HALF_WIDTH_BIT(4))
+maxpool_relu #(.CONV_BIT(15), .HALF_WIDTH(12), .HALF_HEIGHT(12), .HALF_WIDTH_BIT(4))
 maxpool_relu_20(
   .clk(clk),
   .rst_n(rst_n),
@@ -92,7 +92,7 @@ maxpool_relu_20(
   .valid_out_relu(valid_out_4)
 );
 
-maxpool_relu #(.CONV_BIT(12), .HALF_WIDTH(12), .HALF_HEIGHT(12), .HALF_WIDTH_BIT(4))
+maxpool_relu #(.CONV_BIT(15), .HALF_WIDTH(12), .HALF_HEIGHT(12), .HALF_WIDTH_BIT(4))
 maxpool_relu_21(
   .clk(clk),
   .rst_n(rst_n),
@@ -106,7 +106,7 @@ maxpool_relu_21(
   .valid_out_relu(valid_out_5)
 );
 
-maxpool_relu #(.CONV_BIT(12), .HALF_WIDTH(12), .HALF_HEIGHT(12), .HALF_WIDTH_BIT(4))
+maxpool_relu #(.CONV_BIT(15), .HALF_WIDTH(12), .HALF_HEIGHT(12), .HALF_WIDTH_BIT(4))
 maxpool_relu_22(
   .clk(clk),
   .rst_n(rst_n),

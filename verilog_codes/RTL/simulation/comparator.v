@@ -23,18 +23,18 @@ module comparator (
   input clk,
   input rst_n,
   input valid_in,
-  input [11:0] data_in,
+  input [17:0] data_in,
   output reg [3:0] decision,
   output reg valid_out
 );
 
-reg signed [11:0] buffer [0:9];
-reg signed [11:0] max;
-reg signed [11:0] cmp1_0, cmp1_1, cmp1_2, cmp1_3, cmp1_4,
+reg signed [17:0] buffer [0:9];
+reg signed [17:0] max;
+reg signed [17:0] cmp1_0, cmp1_1, cmp1_2, cmp1_3, cmp1_4,
                   cmp2_0, cmp2_1, cmp2_2,
                   cmp3_0, cmp3_1;
 reg [3:0] buf_idx;
-reg [11:0] delay_cnt;
+reg [17:0] delay_cnt;
 reg state;
 
 always @(posedge clk) begin

@@ -24,19 +24,19 @@ module conv2_layer (
     input clk,
     input rst_n,
     input valid_in,
-    input signed [11:0] data_in_0, data_in_1, data_in_2,  // 3 channels, 12-bit input data
-    output signed [15:0] conv1_out, conv2_out, conv3_out,conv4_out , conv5_out , conv6_out , conv7_out , conv8_out , conv9_out,   // 9 outputs from pointwise convolution
+    input signed [14:0] data_in_0, data_in_1, data_in_2,  // 3 channels, 12-bit input data
+    output signed [14:0] conv1_out, conv2_out, conv3_out,conv4_out , conv5_out , conv6_out , conv7_out , conv8_out , conv9_out,   // 9 outputs from pointwise convolution
     output conv_valid_out    // Valid signal for output
 );
 
     // Buffer signals for the 3 input channels
-    wire signed [13:0] buffer_0_out [0:24]; // 25 data points for channel 0
-    wire signed [13:0] buffer_1_out [0:24]; // 25 data points for channel 1
-    wire signed [13:0] buffer_2_out [0:24]; // 25 data points for channel 2
+    wire signed [14:0] buffer_0_out [0:24]; // 25 data points for channel 0
+    wire signed [14:0] buffer_1_out [0:24]; // 25 data points for channel 1
+    wire signed [14:0] buffer_2_out [0:24]; // 25 data points for channel 2
     wire valid_out_buf_0, valid_out_buf_1, valid_out_buf_2;
 
     // Instantiate buffer modules for each channel
-    conv2_buf #( .WIDTH(12), .HEIGHT(12), .DATA_BITS(12)) buffer_0 (
+    conv2_buf #( .WIDTH(12), .HEIGHT(12), .DATA_BITS(15)) buffer_0 (
         .clk(clk),
         .rst_n(rst_n),
         .valid_in(valid_in),
@@ -53,7 +53,7 @@ module conv2_layer (
         .valid_out_buf(valid_out_buf_0)
     );
 
-    conv2_buf #( .WIDTH(12), .HEIGHT(12), .DATA_BITS(12)) buffer_1 (
+    conv2_buf #( .WIDTH(12), .HEIGHT(12), .DATA_BITS(15)) buffer_1 (
         .clk(clk),
         .rst_n(rst_n),
         .valid_in(valid_in),
@@ -70,7 +70,7 @@ module conv2_layer (
         .valid_out_buf(valid_out_buf_1)
     );
 
-    conv2_buf #( .WIDTH(12), .HEIGHT(12), .DATA_BITS(12)) buffer_2 (
+    conv2_buf #( .WIDTH(12), .HEIGHT(12), .DATA_BITS(15)) buffer_2 (
         .clk(clk),
         .rst_n(rst_n),
         .valid_in(valid_in),
@@ -88,7 +88,7 @@ module conv2_layer (
     );
 
     // Instantiate depthwise convolution for each channel using the given depthwise_2 module
-    wire signed [13:0] dep1_out, dep2_out, dep3_out;   // Outputs from depthwise convolution
+    wire signed [14:0] dep1_out, dep2_out, dep3_out;   // Outputs from depthwise convolution
     wire valid_out_calc;
 
     depthwise_2 depwise_inst (
@@ -132,7 +132,7 @@ module conv2_layer (
     );
 
     // Pointwise convolution after depthwise convolution
-    wire signed [15:0] conv1_out, conv2_out, conv3_out,
+    wire signed [14:0] conv1_out, conv2_out, conv3_out,
                              conv4_out, conv5_out, conv6_out,
                              conv7_out, conv8_out, conv9_out;
     pointwise_conv2 pointwise_inst (

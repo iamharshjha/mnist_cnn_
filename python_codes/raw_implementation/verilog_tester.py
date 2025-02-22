@@ -126,7 +126,8 @@ def actualAnswer(layer0_conv2d_weights, layer2_conv2d_weights, layer5_dense_weig
 
     layer0ReLU = RELU(layer0Out, (24, 24, 3))
     layer1Out = MAXPOOLING(layer0ReLU, (24, 24, 3), (2, 2))
-
+    print("maxpooling")
+    print(layer1Out)
     layer2Out = DEPTHWISE_SEPR(layer1Out, (12, 12, 3), layer2_conv2d_weights, (5, 5, 3, 3), (1, 1, 3, 9))
     layer2Out = np.array(layer2Out)
     layer2Out = np.round(layer2Out / 32).astype(int).tolist()
@@ -155,7 +156,7 @@ def actualAnswer(layer0_conv2d_weights, layer2_conv2d_weights, layer5_dense_weig
 def main():
 
     model = loadModel()
-    n = 1000
+    n = 1
     cnt = 0
     #layer0_weights , layer2_weights , layer5_weights , layer6_weights = loadLayers()
     layer0_weights, layer2_weights, layer5_weights = loadLayers()
@@ -167,13 +168,13 @@ def main():
 
     for i in range(n):
         #m = 5
-        testModel = x_train[i].reshape([1, 28, 28, -1])
+        testModel = x_train[101].reshape([1, 28, 28, -1])
         #testmodel, ans = testData()
 
         ans = actualAnswer(layer0_weights, layer2_weights, layer5_weights , testModel)
-        print("actual answer:" ,y_train[i])
+        print("actual answer:" ,y_train[101])
         print("predicted answer , " ,ans)
-        if (y_train[i] == ans):
+        if (y_train[101] == ans):
             cnt+=1
         #print(f"Processing i = {i}")
     print("accuracy ->" , (cnt/n)*100)

@@ -19,12 +19,12 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-module maxpool_relu #(parameter CONV_BIT = 12, HALF_WIDTH = 12, HALF_HEIGHT = 12, HALF_WIDTH_BIT = 4) (
+module maxpool_relu #(parameter CONV_BIT = 15, HALF_WIDTH = 12, HALF_HEIGHT = 12, HALF_WIDTH_BIT = 4) (
 	input clk,
 	input rst_n,	// asynchronous reset, active low
 	input valid_in,
 	input signed [CONV_BIT - 1 : 0] conv_out_1, conv_out_2, conv_out_3,
-	output reg [CONV_BIT - 1 : 0] max_value_1, max_value_2, max_value_3,
+	output reg signed [CONV_BIT - 1 : 0] max_value_1, max_value_2, max_value_3,
 	output reg valid_out_relu
 );
 

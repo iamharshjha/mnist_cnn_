@@ -23,7 +23,7 @@ module conv1_layer (
    input clk,
    input rst_n,
    input [7:0] data_in,
-   output [11:0] conv_out_1, conv_out_2, conv_out_3,
+   output [14:0] conv_out_1, conv_out_2, conv_out_3,
    output valid_out_conv
  );
 
